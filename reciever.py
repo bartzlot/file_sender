@@ -10,6 +10,7 @@ class ServerSite():
         self.IP = self.get_public_ip()
         print(self.IP)
         self.PORT = self.get_port()
+        
         self.create_server()
         self.recieving_file()
      

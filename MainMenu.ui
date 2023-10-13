@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>376</width>
+    <height>391</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>File Sender</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #333; /* Set the main window background color to dark gray */
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>10</y>
+      <width>271</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QLabel" name="label">
+       <property name="maximumSize">
+        <size>
+         <width>225</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 40px; /* Larger font size */
+    font-weight: bold; /* Make the text bold */
+    color: #FF4500; /* Red text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
+}
+</string>
+       </property>
+       <property name="text">
+        <string>File Sender</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="send_file_button">
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QMainWindow QPushButton {
+    background-color: #CC3300; /* Darker red background color */
+    color: #FFF; /* White text color */
+    border: none; /* Remove the button border */
+    border-radius: 20px; /* Make the button round by increasing border-radius */
+    padding: 10px; /* Adjust padding for button content */
+}
+
+QMainWindow QPushButton:hover {
+    background-color: #FF4500; /* Lighter red background color on hover */
+}
+
+QMainWindow QPushButton:pressed {
+    background-color: #AA2200; /* Even darker red background color when pressed */
+}</string>
+       </property>
+       <property name="text">
+        <string>Send File</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="recv_file_button">
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QMainWindow QPushButton {
+    background-color: #CC3300; /* Darker red background color */
+    color: #FFF; /* White text color */
+    border: none; /* Remove the button border */
+    border-radius: 20px; /* Make the button round by increasing border-radius */
+    padding: 10px; /* Adjust padding for button content */
+}
+
+QMainWindow QPushButton:hover {
+    background-color: #FF4500; /* Lighter red background color on hover */
+}
+
+QMainWindow QPushButton:pressed {
+    background-color: #AA2200; /* Even darker red background color when pressed */
+}</string>
+       </property>
+       <property name="text">
+        <string>Recieve File</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="quit_button">
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QMainWindow QPushButton {
+    background-color: #CC3300; /* Darker red background color */
+    color: #FFF; /* White text color */
+    border: none; /* Remove the button border */
+    border-radius: 20px; /* Make the button round by increasing border-radius */
+    padding: 10px; /* Adjust padding for button content */
+}
+
+QMainWindow QPushButton:hover {
+    background-color: #FF4500; /* Lighter red background color on hover */
+}
+
+QMainWindow QPushButton:pressed {
+    background-color: #AA2200; /* Even darker red background color when pressed */
+}</string>
+       </property>
+       <property name="text">
+        <string>Quit</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
