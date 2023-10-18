@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>543</width>
-    <height>309</height>
+    <width>580</width>
+    <height>284</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>241</width>
-      <height>293</height>
+      <width>271</width>
+      <height>271</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -40,11 +40,11 @@
     font-family: Arial, sans-serif;
     font-size: 40px; /* Larger font size */
     font-weight: bold; /* Make the text bold */
-    color: #FF4500; /* Red text color (example: DarkOrange) */
+    color: #FF4500; /* Text color (example: DarkOrange) */
     background: transparent; /* No background */
     text-align: center; /* Center the text horizontally */
-}
-</string>
+
+}</string>
        </property>
        <property name="text">
         <string>Recieve File</string>
@@ -56,6 +56,9 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>1</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_2">
          <property name="maximumSize">
@@ -81,45 +84,28 @@
         </widget>
        </item>
        <item>
-        <widget class="QTextEdit" name="ip_text_edit">
+        <widget class="QLabel" name="ip_label">
          <property name="maximumSize">
           <size>
            <width>200</width>
-           <height>37</height>
+           <height>50</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="styleSheet">
-          <string notr="true">QTextEdit {
-    background-color: #333; /* Dark gray background color for QTextEdit */
-    color: #FFF; /* White text color */
-    border: 2px solid #FF4500; /* Red border around the QTextEdit */
-    border-radius: 5px; /* Rounded corners */
-    padding: 5px; /* Padding for text content */
-}
-
-QTextEdit:hover {
-    border: 2px solid #FF6600; /* Red border on hover */
-}
-
-QTextEdit:focus {
-    border: 2px solid #FF3300; /* Red border when QTextEdit is in focus */
+          <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 25px; /* Larger font size */
+    color: #ff8457;/* Red text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
 }
 </string>
          </property>
-         <property name="html">
-          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;55555555555&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -127,6 +113,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>1</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_4">
          <property name="maximumSize">
@@ -197,7 +186,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <number>5</number>
        </property>
        <item>
-        <widget class="QPushButton" name="set_conn_button">
+        <widget class="QPushButton" name="set_server">
          <property name="maximumSize">
           <size>
            <width>400</width>
@@ -222,7 +211,7 @@ QMainWindow QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
-          <string>Set Connection</string>
+          <string>Set Server</string>
          </property>
         </widget>
        </item>
@@ -231,38 +220,16 @@ QMainWindow QPushButton:pressed {
          <property name="maximumSize">
           <size>
            <width>30</width>
-           <height>40</height>
+           <height>50</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">QCheckBox {
-    border: none; /* Remove the default border */
-    border-radius: 50%; /* Make the checkbox round */
-    padding: 5px; /* Adjust the padding to increase the checkbox size */
-}
-
-QCheckBox::indicator {
-    width: 20px; /* Set the width of the indicator (the checkbox itself) */
-    height: 20px; /* Set the height of the indicator (the checkbox itself) */
-}
+          <string notr="true">
 
 QCheckBox::indicator::unchecked {
-    background-color: #00FF00; /* Set the background color for the unchecked state (green) */
-    border: 2px solid #00CC00; /* Add a border around the unchecked checkbox */
+    background-color:red ;
 }
 
-QCheckBox::indicator:unchecked:hover {
-    background-color: #00CC00; /* Green background on hover for the unchecked state */
-}
-
-QCheckBox::indicator:checked {
-    background-color: #00CC00; /* Set the background color for the checked state (green) */
-    border: 2px solid #009900; /* Add a border around the checked checkbox */
-}
-
-QCheckBox::indicator:checked:hover {
-    background-color: #009900; /* Green background on hover for the checked state */
-}
 </string>
          </property>
          <property name="text">
@@ -280,10 +247,10 @@ QCheckBox::indicator:checked:hover {
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>300</x>
       <y>10</y>
       <width>271</width>
-      <height>291</height>
+      <height>271</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -350,7 +317,7 @@ QMainWindow QPushButton:pressed {
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="save_file_button">
+      <widget class="QPushButton" name="send_file_button">
        <property name="maximumSize">
         <size>
          <width>400</width>
@@ -380,7 +347,7 @@ QMainWindow QPushButton:pressed {
       </widget>
      </item>
      <item>
-      <widget class="QProgressBar" name="saving_progress_bar">
+      <widget class="QProgressBar" name="sending_progress_bar">
        <property name="maximumSize">
         <size>
          <width>400</width>

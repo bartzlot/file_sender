@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>284</height>
+    <width>572</width>
+    <height>309</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>271</width>
-      <height>271</height>
+      <width>280</width>
+      <height>293</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -31,7 +31,7 @@
       <widget class="QLabel" name="label">
        <property name="maximumSize">
         <size>
-         <width>190</width>
+         <width>240</width>
          <height>50</height>
         </size>
        </property>
@@ -40,11 +40,11 @@
     font-family: Arial, sans-serif;
     font-size: 40px; /* Larger font size */
     font-weight: bold; /* Make the text bold */
-    color: #FF4500; /* Text color (example: DarkOrange) */
+    color: #FF4500; /* Red text color (example: DarkOrange) */
     background: transparent; /* No background */
     text-align: center; /* Center the text horizontally */
-
-}</string>
+}
+</string>
        </property>
        <property name="text">
         <string>Send File</string>
@@ -56,9 +56,6 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="spacing">
-        <number>1</number>
-       </property>
        <item>
         <widget class="QLabel" name="label_2">
          <property name="maximumSize">
@@ -84,28 +81,45 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="ip_label">
+        <widget class="QTextEdit" name="ip_text_edit">
          <property name="maximumSize">
           <size>
            <width>200</width>
-           <height>50</height>
+           <height>37</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">QLabel {
-    font-family: Arial, sans-serif;
-    font-size: 25px; /* Larger font size */
-    color: #ff8457;/* Red text color (example: DarkOrange) */
-    background: transparent; /* No background */
-    text-align: center; /* Center the text horizontally */
+          <string notr="true">QTextEdit {
+    background-color: #333; /* Dark gray background color for QTextEdit */
+    color: #FFF; /* White text color */
+    border: 2px solid #FF4500; /* Red border around the QTextEdit */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px; /* Padding for text content */
+}
+
+QTextEdit:hover {
+    border: 2px solid #FF6600; /* Red border on hover */
+}
+
+QTextEdit:focus {
+    border: 2px solid #FF3300; /* Red border when QTextEdit is in focus */
 }
 </string>
          </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:14pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -113,9 +127,6 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <property name="spacing">
-        <number>1</number>
-       </property>
        <item>
         <widget class="QLabel" name="label_4">
          <property name="maximumSize">
@@ -174,7 +185,7 @@ hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;5555&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -186,11 +197,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <number>5</number>
        </property>
        <item>
-        <widget class="QPushButton" name="set_server">
+        <widget class="QPushButton" name="set_conn_button">
          <property name="maximumSize">
           <size>
-           <width>400</width>
-           <height>40</height>
+           <width>420</width>
+           <height>50</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -211,7 +222,7 @@ QMainWindow QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
-          <string>Set Server</string>
+          <string>Set Connection</string>
          </property>
         </widget>
        </item>
@@ -219,45 +230,26 @@ QMainWindow QPushButton:pressed {
         <widget class="QCheckBox" name="conn_status_box">
          <property name="maximumSize">
           <size>
-           <width>30</width>
-           <height>40</height>
+           <width>20</width>
+           <height>50</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">QCheckBox {
-    border: none; /* Remove the default border */
-    border-radius: 50%; /* Make the checkbox round */
-    padding: 5px; /* Adjust the padding to increase the checkbox size */
-}
-
-QCheckBox::indicator {
-    width: 20px; /* Set the width of the indicator (the checkbox itself) */
-    height: 20px; /* Set the height of the indicator (the checkbox itself) */
-}
+          <string notr="true">
 
 QCheckBox::indicator::unchecked {
-    background-color: #00FF00; /* Set the background color for the unchecked state (green) */
-    border: 2px solid #00CC00; /* Add a border around the unchecked checkbox */
+    background-color:red ;
 }
 
-QCheckBox::indicator:unchecked:hover {
-    background-color: #00CC00; /* Green background on hover for the unchecked state */
-}
-
-QCheckBox::indicator:checked {
-    background-color: #00CC00; /* Set the background color for the checked state (green) */
-    border: 2px solid #009900; /* Add a border around the checked checkbox */
-}
-
-QCheckBox::indicator:checked:hover {
-    background-color: #009900; /* Green background on hover for the checked state */
-}
 </string>
          </property>
          <property name="text">
           <string/>
          </property>
          <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="checked">
           <bool>false</bool>
          </property>
         </widget>
@@ -272,7 +264,7 @@ QCheckBox::indicator:checked:hover {
       <x>300</x>
       <y>10</y>
       <width>271</width>
-      <height>271</height>
+      <height>291</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -334,7 +326,7 @@ QMainWindow QPushButton:pressed {
 }</string>
        </property>
        <property name="text">
-        <string>Choose Saving Directory</string>
+        <string>Choose File to Send</string>
        </property>
       </widget>
      </item>
