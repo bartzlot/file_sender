@@ -8,7 +8,7 @@ class SendFile(QMainWindow):
         super().__init__()
 
         uic.loadUi(creating_path_to_ui_file("SendingFile.ui"), self)
-        
+
         self.validity = False
 
         self.ip_text_edit = self.findChild(QTextEdit, "ip_text_edit")
@@ -53,10 +53,11 @@ class SendFile(QMainWindow):
 
         
         else:
+            
             self.error_handler.error_handler(error)
 
 
-    def sending_file(self):#TODO check if dir and connection is valid then send
+    def sending_file(self):
         
         if self.validity is True and os.path.isfile(self.selected_file) == True:
 

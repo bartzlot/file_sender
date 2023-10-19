@@ -317,7 +317,7 @@ QMainWindow QPushButton:pressed {
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="send_file_button">
+      <widget class="QPushButton" name="save_file_button">
        <property name="maximumSize">
         <size>
          <width>400</width>
@@ -347,7 +347,7 @@ QMainWindow QPushButton:pressed {
       </widget>
      </item>
      <item>
-      <widget class="QProgressBar" name="sending_progress_bar">
+      <widget class="QProgressBar" name="saving_progress_bar">
        <property name="maximumSize">
         <size>
          <width>400</width>
