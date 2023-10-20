@@ -1,5 +1,4 @@
-import socket
-import json
+from lib import *
 
 
 class RecieverSite():
@@ -12,6 +11,7 @@ class RecieverSite():
         self.ADDR = None
      
     def get_public_ip(self):
+        
         try:
 
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -64,8 +64,7 @@ class RecieverSite():
         self.server.bind(self.ADDR)
     
 
-    
-    def recieving_file(self, dir_to_save):
+    def file_acceptance(self):
 
         self.server.listen()
         self.client, self.addr = self.server.accept()
@@ -74,14 +73,33 @@ class RecieverSite():
         recieved_file_name = metadata["file_name"]
         recieved_file_size = metadata["file_size"]
 
+        return recieved_file_name, recieved_file_size
 
-        saved_file_name = str(input("Please insert file name with correct file extension to save: "))
+    
+    def break_connection(self):
+        
+        self.client.close()
 
-        recieved_file_name = dir_to_save + saved_file_name
+
+
+    def recieving_file(self, dir_to_save, file_name):
+
+        # self.server.listen()
+        # self.client, self.addr = self.server.accept()
+
+        # metadata = json.loads(self.client.recv(1024).decode())
+        # recieved_file_name = metadata["file_name"]
+        # recieved_file_size = metadata["file_size"]
+        
+        # acceptance_sig = pyqtSignal.emit(str, int)
+        # acceptance_sig.emit(recieved_file_name, recieved_file_size)
+
+        recieved_file_name = dir_to_save + file_name
 
         file_to_save = open(recieved_file_name, "wb")
         file_to_save_bytes = b""
         done = False
+
 
         while not done:
 

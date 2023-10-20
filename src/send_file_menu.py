@@ -31,6 +31,7 @@ class SendFile(QMainWindow):
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.send_file_button.clicked.connect(self.sending_file)
 
+
     def opening_file_dialog(self):
 
         file_dialog = QFileDialog()
@@ -53,7 +54,7 @@ class SendFile(QMainWindow):
 
         
         else:
-            
+
             self.error_handler.error_handler(error)
 
 

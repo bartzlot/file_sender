@@ -5,6 +5,7 @@ class RecieveFile(QMainWindow):
 
 
     def __init__(self) -> None:
+
         super().__init__()
 
         uic.loadUi(creating_path_to_ui_file("RecievingFile.ui"), self)
@@ -34,11 +35,12 @@ class RecieveFile(QMainWindow):
 
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.set_server_button.clicked.connect(self.setting_up_server)
+        self.save_file_button.clicked.connect(self.saving_file)
 
 
     def opening_file_dialog(self):
 
-        file_dialog = QFileDialog()
+        file_dialog = QFileDialog(self)
         self.selected_dir = file_dialog.getExistingDirectory()
         self.dir_label.setText(self.selected_dir)
     
@@ -80,10 +82,53 @@ class RecieveFile(QMainWindow):
 
         if self.validity is True and os.path.isdir(self.selected_dir):
 
-            self.recv_server.recieving_file(self.selected_dir)
-        
+            file_name, file_size = self.recv_server.file_acceptance()
+
+            self.file_acceptance = FileAcceptance(self)
+
+            acc_status = self.file_acceptance.getting_acceptance_satus()
+
+            if acc_status:
+
+                self.recv_server.recieving_file(self.selected_dir, file_name)
+
+            else:
+                
+                self.recv_server.break_connection()
         else:
             
             self.error_handler.error_handler("Please select proper directory or set valid server")
+
+
+class FileAcceptance(QDialog):
+
+
+    def __init__(self, parent = RecieveFile):
+
+        super(FileAcceptance, self).__init__(parent)
+        uic.loadUi(creating_path_to_ui_file("file_acceptance.ui"), self)
+        
+        self.file_name_label = self.findChild(QLabel, "file_name_label")
+        self.file_size_label = self.findChild(QLabel, "file_size_label")
+
+        self.dialog_options = self.findChild(QDialogButtonBox, "dialog_yes_no")
+
+        self.dialog_options.accepted.connect(self.accept) 
+        self.dialog_options.rejected.connect(self.reject) 
+
+
+    def getting_acceptance_satus(self):
+        self.file_name_label.setText()
+        self.file_size_label.setText(str())
+        result = self.exec()
+
+        if result == QDialog.DialogCode.Accepted:
+
+            return True
+        
+        else:
+
+            return False
+
 
 
