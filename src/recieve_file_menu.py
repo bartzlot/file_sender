@@ -16,6 +16,7 @@ class RecieveFile(QMainWindow):
         self.dir_label = self.findChild(QLabel, "dir_label")
 
         self.port_text_edit = self.findChild(QTextEdit, "port_text_edit")
+        self.aes_text_edit = self.findChild(QTextEdit, "aes_texedit")
 
         self.set_server_button = self.findChild(QPushButton, "set_server")
         self.choose_dir_button = self.findChild(QPushButton, "choose_dir_button")
@@ -27,7 +28,6 @@ class RecieveFile(QMainWindow):
 
         self.recv_server = RecieverSite()
         self.error_handler = Errorhandler()
-        self.recv_server.show()
         self.IP = self.recv_server.get_public_ip()
         self.PORT = None
 
@@ -67,6 +67,11 @@ class RecieveFile(QMainWindow):
 
         self.PORT = self.port_text_edit.toPlainText()
 
+        bytes_key = self.aes_text_edit.toPlainText()
+        bytes_key = bytes.fromhex(bytes_key)
+
+        self.cipher = AES.new(bytes_key, AES.MODE_EAX)
+
         self.validity, error = self.recv_server.setting_server_addr(self.IP, self.PORT)
 
         if self.validity:
@@ -90,7 +95,7 @@ class RecieveFile(QMainWindow):
 
             if acc_status:
 
-                self.recv_server.recieving_file(self.selected_dir, file_name)
+                self.recv_server.recieving_file(self.selected_dir, file_name, file_size)
 
             else:
                 

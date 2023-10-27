@@ -21,15 +21,26 @@ class SendFile(QMainWindow):
         self.connection_status = self.findChild(QCheckBox, "conn_status_box")
 
         self.directory_label = self.findChild(QLabel, "dir_label")
+        self.aes_label = self.findChild(QLabel, "aes_label")
+        self.aes_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.saving_progress_bar = self.findChild(QProgressBar, "sending_progress_bar")
 
         self.sender_client = SenderSite()
         self.error_handler = Errorhandler()
 
+        self.generating_aes_key()
         self.set_connection_button.clicked.connect(self.setting_connection)
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.send_file_button.clicked.connect(self.sending_file)
+
+
+    def generating_aes_key(self):
+
+        KEY_SIZE = 16
+        bytes_key = Crypto.Random.get_random_bytes(KEY_SIZE)
+        self.aes_label.setText(bytes_key.hex())
+        self.cipher = AES.new(bytes_key, AES.MODE_EAX)
 
 
     def opening_file_dialog(self):
@@ -62,7 +73,7 @@ class SendFile(QMainWindow):
         
         if self.validity is True and os.path.isfile(self.selected_file) == True:
 
-            self.sender_client.sending_file(self.selected_file)
+            self.sender_client.sending_file(self.selected_file, self.cipher)
         
         else:
 

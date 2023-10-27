@@ -4,6 +4,9 @@ import pathlib
 import requests
 import socket
 import json
+from Crypto.Cipher import AES
+import Crypto.Random
+import binascii
 from PyQt6.QtWidgets import (QWidget, QApplication, 
                              QMainWindow, QCalendarWidget, 
                              QDateEdit, QLabel, QPushButton,
