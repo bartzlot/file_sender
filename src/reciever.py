@@ -1,10 +1,16 @@
 from lib import *
 
 
-class RecieverSite():
+class RecieverSite(QMainWindow):
     
 
     def __init__(self) -> None:
+
+        super().__init__()
+
+        uic.loadUi(creating_path_to_ui_file("recv_file_status.ui"), self)
+
+        self.status_bar = self.findChild(QProgressBar, 'saving_progress_bar')
 
         self.IP = None
         self.PORT = None
@@ -58,6 +64,7 @@ class RecieverSite():
 
         return True, ''
 
+
     def create_server(self, ADDR):
 
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -82,7 +89,7 @@ class RecieverSite():
 
 
 
-    def recieving_file(self, dir_to_save, file_name):
+    def recieving_file(self, dir_to_save, file_name, file_size):
 
         # self.server.listen()
         # self.client, self.addr = self.server.accept()
@@ -93,6 +100,13 @@ class RecieverSite():
         
         # acceptance_sig = pyqtSignal.emit(str, int)
         # acceptance_sig.emit(recieved_file_name, recieved_file_size)
+        bar_value_update = 0   
+        self.status_bar.setMinimum(0)
+        self.status_bar.setMaximum(file_size) 
+        self.status_bar.setValue(bar_value_update)
+         
+        
+        self.show()
 
         recieved_file_name = dir_to_save + file_name
 
@@ -105,6 +119,9 @@ class RecieverSite():
 
             data = self.client.recv(1024)
 
+            bar_value_update += 1024
+            self.status_bar.setValue(bar_value_update)
+
             if file_to_save_bytes[-5:] == b"<END>":
                 done = True
 
@@ -115,5 +132,6 @@ class RecieverSite():
         file_to_save.close()
         self.client.close()
         self.server.close()
+        self.close()
 
 
