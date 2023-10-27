@@ -27,7 +27,7 @@ class RecieveFile(QMainWindow):
 
         self.recv_server = RecieverSite()
         self.error_handler = Errorhandler()
-
+        self.recv_server.show()
         self.IP = self.recv_server.get_public_ip()
         self.PORT = None
 
