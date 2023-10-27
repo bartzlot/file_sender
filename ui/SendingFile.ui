@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>572</width>
+    <width>696</width>
     <height>309</height>
    </rect>
   </property>
@@ -18,14 +18,14 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>280</width>
-      <height>293</height>
+      <y>12</y>
+      <width>360</width>
+      <height>291</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>2</number>
+      <number>4</number>
      </property>
      <item>
       <widget class="QLabel" name="label">
@@ -84,7 +84,7 @@
         <widget class="QTextEdit" name="ip_text_edit">
          <property name="maximumSize">
           <size>
-           <width>200</width>
+           <width>300</width>
            <height>37</height>
           </size>
          </property>
@@ -155,7 +155,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <widget class="QTextEdit" name="port_text_edit">
          <property name="maximumSize">
           <size>
-           <width>150</width>
+           <width>250</width>
            <height>38</height>
           </size>
          </property>
@@ -186,6 +186,66 @@ li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <property name="spacing">
+        <number>-1</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="maximumSize">
+          <size>
+           <width>110</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 22px; /* Larger font size */
+    font-weight: bold; /* Make the text bold */
+    color: #FF4500; /* Red text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
+}
+</string>
+         </property>
+         <property name="text">
+          <string>AES KEY:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="aes_label">
+         <property name="maximumSize">
+          <size>
+           <width>250</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 14px; /* Larger font size */
+    color: #ff8457; /* Red text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
+    selection: on; /* Allow text selection */
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -261,7 +321,7 @@ QCheckBox::indicator::unchecked {
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>410</x>
       <y>10</y>
       <width>271</width>
       <height>291</height>

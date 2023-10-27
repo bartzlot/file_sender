@@ -43,7 +43,7 @@ class SenderSite():
         self.client.connect(self.ADDR)
 
 
-    def sending_file(self, path: str):
+    def sending_file(self, path: str, cipher):
 
         file_size = os.path.getsize(path)
 
@@ -52,6 +52,8 @@ class SenderSite():
 
         file_to_send = open(path, "rb")
         data = file_to_send.read()
+
+        encrypted_file = cipher.encrypt(data)
 
         self.client.sendall(data)
         self.client.send(b"<END>")

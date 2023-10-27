@@ -16,6 +16,7 @@ class RecieverSite(QMainWindow):
         self.PORT = None
         self.ADDR = None
      
+     
     def get_public_ip(self):
         
         try:
@@ -88,8 +89,7 @@ class RecieverSite(QMainWindow):
         self.client.close()
 
 
-
-    def recieving_file(self, dir_to_save, file_name, file_size):
+    def recieving_file(self, dir_to_save, file_name, file_size, cipher):
 
         # self.server.listen()
         # self.client, self.addr = self.server.accept()
@@ -114,7 +114,6 @@ class RecieverSite(QMainWindow):
         file_to_save_bytes = b""
         done = False
 
-
         while not done:
 
             data = self.client.recv(1024)
@@ -128,7 +127,7 @@ class RecieverSite(QMainWindow):
             else:
                 file_to_save_bytes += data
 
-        file_to_save.write(file_to_save_bytes[:-5])
+        file_to_save.write(cipher.decrypt(file_to_save_bytes[:-5]))
         file_to_save.close()
         self.client.close()
         self.server.close()
