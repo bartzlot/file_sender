@@ -95,7 +95,7 @@ class RecieveFile(QMainWindow):
 
             if acc_status:
 
-                self.recv_server.recieving_file(self.selected_dir, file_name, file_size)
+                self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
 
             else:
                 
