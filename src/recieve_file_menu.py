@@ -68,6 +68,7 @@ class RecieveFile(QMainWindow):
         self.PORT = self.port_text_edit.toPlainText()
 
         bytes_key = self.aes_text_edit.toPlainText()
+
         bytes_key = bytes.fromhex(bytes_key)
 
         self.cipher = AES.new(bytes_key, AES.MODE_EAX)
@@ -87,16 +88,16 @@ class RecieveFile(QMainWindow):
 
         if self.validity is True and os.path.isdir(self.selected_dir):
 
-            file_name, file_size = self.recv_server.file_acceptance()
+            # file_name, file_size = self.recv_server.file_acceptance()
 
-            self.file_acceptance = FileAcceptance(self)
+            # self.file_acceptance = FileAcceptance(self)
 
-            acc_status = self.file_acceptance.getting_acceptance_satus()
+            # acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
 
-            if acc_status:
-
-                self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
-
+            if True:# acc_status
+                self.recv_server.show()
+                self.recv_server.recieving_file(self.selected_dir)
+                self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
             else:
                 
                 self.recv_server.break_connection()
@@ -122,9 +123,9 @@ class FileAcceptance(QDialog):
         self.dialog_options.rejected.connect(self.reject) 
 
 
-    def getting_acceptance_satus(self):
-        self.file_name_label.setText()
-        self.file_size_label.setText(str())
+    def getting_acceptance_satus(self, file_label, file_size):
+        self.file_name_label.setText(file_label)
+        self.file_size_label.setText(str(file_size))
         result = self.exec()
 
         if result == QDialog.DialogCode.Accepted:
@@ -135,5 +136,9 @@ class FileAcceptance(QDialog):
 
             return False
 
-
+#TODO 
+#recieving proper filename and file size
+#Good cipher working key
+#Add file acceptance with UI acceptation after recieving whole file before file.write()
+#quit send file and recieve file window after whole operation to avoid bugging
 
