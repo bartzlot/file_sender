@@ -33,6 +33,7 @@ class RecieveFile(QMainWindow):
 
         self.ip_label.setText(self.IP)
 
+
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.set_server_button.clicked.connect(self.setting_up_server)
         self.save_file_button.clicked.connect(self.saving_file)
@@ -88,16 +89,17 @@ class RecieveFile(QMainWindow):
 
         if self.validity is True and os.path.isdir(self.selected_dir):
 
-            # file_name, file_size = self.recv_server.file_acceptance()
+            file_name, file_size = self.recv_server.file_acceptance()
 
-            # self.file_acceptance = FileAcceptance(self)
+            self.file_acceptance = FileAcceptance(self)
 
-            # acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
+            acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
 
-            if True:# acc_status
-                self.recv_server.show()
-                self.recv_server.recieving_file(self.selected_dir)
+            if acc_status:
+
+                self.recv_server.recieving_file(self.selected_dir, file_name, file_size)
                 self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
+
             else:
                 
                 self.recv_server.break_connection()
@@ -141,4 +143,5 @@ class FileAcceptance(QDialog):
 #Good cipher working key
 #Add file acceptance with UI acceptation after recieving whole file before file.write()
 #quit send file and recieve file window after whole operation to avoid bugging
+#Add progress bar threading needed
 

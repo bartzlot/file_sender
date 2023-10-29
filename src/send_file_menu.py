@@ -63,7 +63,6 @@ class SendFile(QMainWindow):
 
             self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
 
-        
         else:
 
             self.error_handler.error_handler(error)

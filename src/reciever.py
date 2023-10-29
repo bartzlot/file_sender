@@ -78,25 +78,29 @@ class RecieverSite(QMainWindow):
         self.server.listen()
         self.client, self.addr = self.server.accept()
 
-        
-        
+        metadata = self.client.recv(1024).decode('utf-8')
 
+        recieved_file_name, recieved_file_size = metadata.split('\O')
+        recieved_file_size = int(recieved_file_size)        
+        print(recieved_file_name, recieved_file_size)
+        
+        return recieved_file_name, recieved_file_size
     
     def break_connection(self):
         
         self.client.close()
 
 
-    def recieving_file(self, dir_to_save):
+    def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size):
 
-        self.server.listen()
-        self.client, self.addr = self.server.accept()
+        # self.server.listen()
+        # self.client, self.addr = self.server.accept()
 
-        metadata = self.client.recv(1024).decode('utf-8')
+        # metadata = self.client.recv(1024).decode('utf-8')
 
-        recieved_file_name, recieved_file_size = metadata.split('\O')
-        recieved_file_size = int(recieved_file_size)
-        print(recieved_file_name, recieved_file_size)
+        # recieved_file_name, recieved_file_size = metadata.split('\O')
+        # recieved_file_size = int(recieved_file_size)
+        # print(recieved_file_name, recieved_file_size)
         # metadata = json.loads(self.client.recv(1024).decode('utf-8'))
         # recieved_file_name = metadata["file_name"]
         # recieved_file_size = metadata["file_size"]
@@ -108,7 +112,6 @@ class RecieverSite(QMainWindow):
         self.status_bar.setMinimum(0)
         self.status_bar.setMaximum(recieved_file_size) 
         self.status_bar.setValue(bar_value_update)
-        self.show()
 
         dir = pathlib.Path(dir_to_save)
         recieved_file_name = dir.joinpath(recieved_file_name)
@@ -121,9 +124,9 @@ class RecieverSite(QMainWindow):
 
         while not done:
 
-            data = self.client.recv(1024)
+            data = self.client.recv(2048)
 
-            bar_value_update += 1024
+            bar_value_update += 2048
             self.status_bar.setValue(bar_value_update)
 
             if file_to_save_bytes[-5:] == b"<END>":
@@ -135,8 +138,7 @@ class RecieverSite(QMainWindow):
         file_to_save.write(file_to_save_bytes[:-5])
         file_to_save.close()
         self.client.close()
-        self.server.close()
-        self.close()
+        self.server.close() 
         print("file recieved")
 
 

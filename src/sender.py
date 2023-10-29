@@ -48,14 +48,19 @@ class SenderSite():
         file_size = os.path.getsize(path)
 
         metadata = f"{os.path.basename(path)}\O{file_size}"
-        print(metadata)
+
         self.client.sendall(metadata.encode('utf-8'))
 
-        file_to_send = open(path, "rb")
-        data = file_to_send.read()
+        acknowledgement = self.client.recv(1024).decode('utf-8')
 
-        # encrypted_file = cipher.encrypt(data)
+        if acknowledgement == "ACK":
 
-        self.client.sendall(data)
-        self.client.send(b"<END>")
-        self.client.close()
+
+            file_to_send = open(path, "rb")
+            data = file_to_send.read()
+
+            # encrypted_file = cipher.encrypt(data)
+
+            self.client.sendall(data)
+            self.client.send(b"<END>")
+            self.client.close()
