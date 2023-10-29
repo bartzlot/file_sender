@@ -48,6 +48,7 @@ class SenderSite():
         file_size = os.path.getsize(path)
 
         metadata = f"{os.path.basename(path)}\O{file_size}"
+        print(metadata)
         self.client.sendall(metadata.encode('utf-8'))
 
         file_to_send = open(path, "rb")
