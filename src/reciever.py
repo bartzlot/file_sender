@@ -117,6 +117,8 @@ class RecieverSite(QMainWindow):
         file_to_save_bytes = b""
         done = False
 
+        self.client.sendall("ACK".encode('utf-8'))
+
         while not done:
 
             data = self.client.recv(1024)
