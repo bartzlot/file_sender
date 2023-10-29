@@ -92,10 +92,10 @@ class RecieverSite(QMainWindow):
         self.server.listen()
         self.client, self.addr = self.server.accept()
 
-        metadata_json = self.client.recv(1024).decode('utf-8')
-        metadata = json.loads(metadata_json)
-        recieved_file_name = metadata["file_name"]
-        recieved_file_size = metadata["file_size"]
+        metadata = self.client.recv(1024).decode('utf-8')
+
+        recieved_file_name, recieved_file_size = metadata.split('\O')
+        recieved_file_size = int(recieved_file_size)
         print(recieved_file_name, recieved_file_size)
         # metadata = json.loads(self.client.recv(1024).decode('utf-8'))
         # recieved_file_name = metadata["file_name"]
@@ -109,9 +109,9 @@ class RecieverSite(QMainWindow):
         self.status_bar.setMaximum(recieved_file_size) 
         self.status_bar.setValue(bar_value_update)
         self.show()
-        
+
         dir = pathlib.Path(dir_to_save)
-        recieved_file_name = dir.joinpath("test.txt")
+        recieved_file_name = dir.joinpath(recieved_file_name)
 
         file_to_save = open(recieved_file_name, "wb")
         file_to_save_bytes = b""

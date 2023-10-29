@@ -47,14 +47,14 @@ class SenderSite():
 
         file_size = os.path.getsize(path)
 
-        metadata = {"file_name": os.path.basename(path), "file_size": file_size}
-        self.client.sendall(json.dumps(metadata).encode('utf-8'))
+        metadata = f"{os.path.basename(path)}\O{file_size}"
+        self.client.sendall(metadata.encode('utf-8'))
 
         file_to_send = open(path, "rb")
         data = file_to_send.read()
 
-        encrypted_file = cipher.encrypt(data)
+        # encrypted_file = cipher.encrypt(data)
 
-        self.client.sendall(encrypted_file)
+        self.client.sendall(data)
         self.client.send(b"<END>")
         self.client.close()
