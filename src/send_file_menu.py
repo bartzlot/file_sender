@@ -37,11 +37,13 @@ class SendFile(QMainWindow):
 
     def generating_aes_key(self):
 
-        KEY_SIZE = 16
-        bytes_key = Crypto.Random.get_random_bytes(KEY_SIZE)
-        print(bytes_key)
-        self.aes_label.setText(bytes_key.hex())
-        self.cipher = AES.new(bytes_key, AES.MODE_EAX)
+        key = "aaaaaaaaaaaaaaaa"
+        key = key.encode('utf-8')
+        nonce = key
+
+        self.aes_label.setText(key)
+        
+        self.cipher = AES.new(key, AES.MODE_EAX, nonce)
 
 
     def opening_file_dialog(self):

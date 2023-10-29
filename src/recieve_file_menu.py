@@ -64,15 +64,21 @@ class RecieveFile(QMainWindow):
             return None
 
 
+    def getting_cipher(self):
+
+        key = "aaaaaaaaaaaaaaaa"
+        key = key.encode('utf-8')
+        nonce = key
+        self.cipher = AES.new(key, AES.MODE_EAX, nonce)
+
+
     def setting_up_server(self):
 
         self.PORT = self.port_text_edit.toPlainText()
 
         bytes_key = self.aes_text_edit.toPlainText()
 
-        bytes_key = bytes.fromhex(bytes_key)
-        print(bytes_key)
-        self.cipher = AES.new(bytes_key, AES.MODE_EAX)
+
 
         self.validity, error = self.recv_server.setting_server_addr(self.IP, self.PORT)
 
@@ -139,7 +145,6 @@ class FileAcceptance(QDialog):
             return False
 
 #TODO 
-#recieving proper filename and file size
 #Good cipher working key
 #Add file acceptance with UI acceptation after recieving whole file before file.write()
 #quit send file and recieve file window after whole operation to avoid bugging
