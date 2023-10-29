@@ -39,6 +39,7 @@ class SendFile(QMainWindow):
 
         KEY_SIZE = 16
         bytes_key = Crypto.Random.get_random_bytes(KEY_SIZE)
+        print(bytes_key)
         self.aes_label.setText(bytes_key.hex())
         self.cipher = AES.new(bytes_key, AES.MODE_EAX)
 

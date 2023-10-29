@@ -91,7 +91,7 @@ class RecieverSite(QMainWindow):
         self.client.close()
 
 
-    def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size):
+    def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size, cipher):
 
         # self.server.listen()
         # self.client, self.addr = self.server.accept()
@@ -135,7 +135,7 @@ class RecieverSite(QMainWindow):
             else:
                 file_to_save_bytes += data
 
-        file_to_save.write(file_to_save_bytes[:-5])
+        file_to_save.write(cipher.decode(file_to_save_bytes[:-5]))
         file_to_save.close()
         self.client.close()
         self.server.close() 

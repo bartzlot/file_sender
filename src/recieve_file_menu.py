@@ -71,7 +71,7 @@ class RecieveFile(QMainWindow):
         bytes_key = self.aes_text_edit.toPlainText()
 
         bytes_key = bytes.fromhex(bytes_key)
-
+        print(bytes_key)
         self.cipher = AES.new(bytes_key, AES.MODE_EAX)
 
         self.validity, error = self.recv_server.setting_server_addr(self.IP, self.PORT)
@@ -97,7 +97,7 @@ class RecieveFile(QMainWindow):
 
             if acc_status:
 
-                self.recv_server.recieving_file(self.selected_dir, file_name, file_size)
+                self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
                 self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
 
             else:

@@ -11,8 +11,7 @@ class SenderSite():
         self.PACKAGE_SIZE = 1024
         self.FORMAT = "utf-8"
 
-        # self.creating_connection()
-        # self. sending_file()
+
     def setting_addr(self, ip, port):
 
         if port == '' or ip == '':
@@ -59,8 +58,8 @@ class SenderSite():
             file_to_send = open(path, "rb")
             data = file_to_send.read()
 
-            # encrypted_file = cipher.encrypt(data)
+            encrypted_file = cipher.encrypt(data)
 
-            self.client.sendall(data)
+            self.client.sendall(encrypted_file)
             self.client.send(b"<END>")
             self.client.close()
