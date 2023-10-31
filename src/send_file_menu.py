@@ -71,9 +71,7 @@ class SendFile(QMainWindow):
 
         self.validity, error = self.sender_client.setting_addr(ip, port)
 
-        self.validity = self.generating_aes_key()
-
-        if self.validity:
+        if self.validity and self.generating_aes_key():
 
             self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
 

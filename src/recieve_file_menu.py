@@ -105,27 +105,30 @@ class RecieveFile(QMainWindow):
 
     def saving_file(self):
 
+        try:
+            if self.validity is True and os.path.isdir(self.selected_dir):
 
-        if self.validity is True and os.path.isdir(self.selected_dir):
+                file_name, file_size = self.recv_server.file_acceptance()
 
-            file_name, file_size = self.recv_server.file_acceptance()
+                self.file_acceptance = FileAcceptance(self)
 
-            self.file_acceptance = FileAcceptance(self)
+                acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
 
-            acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
+                if acc_status:
 
-            if acc_status:
+                    self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
+                    self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
+                    self.close()
 
-                self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
-                self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
-                self.close()
-
+                else:
+                    
+                    self.recv_server.break_connection()
             else:
                 
-                self.recv_server.break_connection()
-        else:
-            
-            self.error_handler.error_handler("Please select proper directory or set valid server")
+                self.error_handler.error_handler("Please select proper directory or set valid server...")
+        except:
+
+            self.error_handler.error_handler("Please set valid server firstly...")
 
 
 class FileAcceptance(QDialog):
