@@ -107,11 +107,12 @@ class RecieverSite(QMainWindow):
         
         # acceptance_sig = pyqtSignal.emit(str, int)
         # acceptance_sig.emit(recieved_file_name, recieved_file_size)
-        
+
         bar_value_update = 0   
         self.status_bar.setMinimum(0)
         self.status_bar.setMaximum(recieved_file_size) 
         self.status_bar.setValue(bar_value_update)
+
 
         dir = pathlib.Path(dir_to_save)
         recieved_file_name = dir.joinpath(recieved_file_name)

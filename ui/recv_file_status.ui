@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Recieving Fle Status</string>
+   <string>Recieving File Status</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QProgressBar" name="saving_progress_bar">

@@ -114,7 +114,11 @@ class RecieveFile(QMainWindow):
 
                 acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
 
+                self.recv_server.show()
+
                 if acc_status:
+                    
+                    # getting_file = threading.Thread(target=self.recv_server.recieving_file, args=(self.selected_dir, file_name, file_size, self.cipher))
 
                     self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
                     self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
@@ -162,7 +166,6 @@ class FileAcceptance(QDialog):
             return False
 
 #TODO 
-#Good cipher working key user input
-#quit send file and recieve file window after whole operation to avoid bugging
-#Add progress bar threading needed
+#Add progress bar pyqtsignal
+#work on public IP sending option
 

@@ -44,23 +44,31 @@ class SenderSite():
 
     def sending_file(self, path: str, cipher):
 
-        file_size = os.path.getsize(path)
+        try:
 
-        metadata = f"{os.path.basename(path)}\O{file_size}"
+            file_size = os.path.getsize(path)
 
-        self.client.sendall(metadata.encode('utf-8'))
+            metadata = f"{os.path.basename(path)}\O{file_size}"
 
-        acknowledgement = self.client.recv(1024).decode('utf-8')
+            self.client.sendall(metadata.encode('utf-8'))
 
-        if acknowledgement == "ACK":
+            acknowledgement = self.client.recv(1024).decode('utf-8')
+
+            if acknowledgement == "ACK":
 
 
-            file_to_send = open(path, "rb")
-            data = file_to_send.read()
+                file_to_send = open(path, "rb")
+                data = file_to_send.read()
 
-            encrypted_file = cipher.encrypt(data)
+                encrypted_file = cipher.encrypt(data)
 
-            self.client.sendall(encrypted_file)
+                self.client.sendall(encrypted_file)
+                
+                self.client.send(b"<END>")
+                self.client.close()
+                
+                return True, ''
+
+        except Exception as e:
             
-            self.client.send(b"<END>")
-            self.client.close()
+            return False, e
