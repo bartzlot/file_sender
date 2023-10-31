@@ -93,6 +93,8 @@ class RecieveFile(QMainWindow):
 
     def saving_file(self):
 
+        self.getting_cipher()
+
         if self.validity is True and os.path.isdir(self.selected_dir):
 
             file_name, file_size = self.recv_server.file_acceptance()
@@ -145,7 +147,7 @@ class FileAcceptance(QDialog):
             return False
 
 #TODO 
-#Good cipher working key
+#Good cipher working key user input
 #Add file acceptance with UI acceptation after recieving whole file before file.write()
 #quit send file and recieve file window after whole operation to avoid bugging
 #Add progress bar threading needed
