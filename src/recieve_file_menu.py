@@ -66,17 +66,29 @@ class RecieveFile(QMainWindow):
 
     def getting_cipher(self):
 
-        key = "aaaaaaaaaaaaaaaa"
+        key = self.aes_text_edit.toPlainText()
+
+        if len(key) > 16:
+
+            self.error_handler.error_handler("AES key should not be longer than 16 letters...")
+            return False
+        
+        elif len(key) < 16:
+
+            key = key + 'a' * (16-len(key))
+
         key = key.encode('utf-8')
         nonce = key
+        print(key)
         self.cipher = AES.new(key, AES.MODE_EAX, nonce)
 
+        return True
 
     def setting_up_server(self):
 
         self.PORT = self.port_text_edit.toPlainText()
 
-        bytes_key = self.aes_text_edit.toPlainText()
+        self. validity = self.getting_cipher()
 
 
 
@@ -93,7 +105,6 @@ class RecieveFile(QMainWindow):
 
     def saving_file(self):
 
-        self.getting_cipher()
 
         if self.validity is True and os.path.isdir(self.selected_dir):
 
@@ -107,6 +118,7 @@ class RecieveFile(QMainWindow):
 
                 self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
                 self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
+                self.close()
 
             else:
                 
@@ -148,7 +160,6 @@ class FileAcceptance(QDialog):
 
 #TODO 
 #Good cipher working key user input
-#Add file acceptance with UI acceptation after recieving whole file before file.write()
 #quit send file and recieve file window after whole operation to avoid bugging
 #Add progress bar threading needed
 

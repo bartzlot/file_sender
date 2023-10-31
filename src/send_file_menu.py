@@ -21,15 +21,13 @@ class SendFile(QMainWindow):
         self.connection_status = self.findChild(QCheckBox, "conn_status_box")
 
         self.directory_label = self.findChild(QLabel, "dir_label")
-        self.aes_label = self.findChild(QLabel, "aes_label")
-        self.aes_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.aes_textedit = self.findChild(QTextEdit, "aes_textedit")
 
         self.saving_progress_bar = self.findChild(QProgressBar, "sending_progress_bar")
 
         self.sender_client = SenderSite()
         self.error_handler = Errorhandler()
 
-        self.generating_aes_key()
         self.set_connection_button.clicked.connect(self.setting_connection)
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.send_file_button.clicked.connect(self.sending_file)
@@ -37,13 +35,24 @@ class SendFile(QMainWindow):
 
     def generating_aes_key(self):
 
-        key = "aaaaaaaaaaaaaaaa"
+
+        key = self.aes_textedit.toPlainText()
+
+        if len(key) > 16:
+
+            self.error_handler.error_handler("AES key should not be longer than 16 letters...")
+            return False
+        
+        elif len(key) < 16:
+
+            key = key + 'a' * (16-len(key))
+        
         key = key.encode('utf-8')
         nonce = key
-
-        self.aes_label.setText(key)
-        
+        print(key)
         self.cipher = AES.new(key, AES.MODE_EAX, nonce)
+
+        return True
 
 
     def opening_file_dialog(self):
@@ -62,6 +71,8 @@ class SendFile(QMainWindow):
 
         self.validity, error = self.sender_client.setting_addr(ip, port)
 
+        self.validity = self.generating_aes_key()
+
         if self.validity:
 
             self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
@@ -76,7 +87,8 @@ class SendFile(QMainWindow):
         if self.validity is True and os.path.isfile(self.selected_file) == True:
 
             self.sender_client.sending_file(self.selected_file, self.cipher)
-        
+            self.close()
+            
         else:
 
             self.error_handler.error_handler("Please select correct file or set proper connection...")

@@ -138,9 +138,11 @@ class RecieverSite(QMainWindow):
         decrypted_file = cipher.decrypt(file_to_save_bytes[:-5])
         
         file_to_save.write(decrypted_file)
+        
         file_to_save.close()
         self.client.close()
-        self.server.close() 
+        self.server.close()
+
         print("file recieved")
 
 
