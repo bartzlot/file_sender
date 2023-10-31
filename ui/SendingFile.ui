@@ -221,31 +221,40 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="aes_label">
+        <widget class="QTextEdit" name="aes_textedit">
          <property name="maximumSize">
           <size>
-           <width>250</width>
-           <height>30</height>
+           <width>200</width>
+           <height>35</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLabel {
-    font-family: Arial, sans-serif;
-    font-size: 14px; /* Larger font size */
-    color: #ff8457; /* Red text color (example: DarkOrange) */
-    background: transparent; /* No background */
-    text-align: center; /* Center the text horizontally */
-    selection: on; /* Allow text selection */
-}</string>
+          <string notr="true">QTextEdit {
+    background-color: #333; /* Dark gray background color for QTextEdit */
+    color: #FFF; /* White text color */
+    border: 2px solid #FF4500; /* Red border around the QTextEdit */
+    border-radius: 5px; /* Rounded corners */
+    padding: 3px; /* Padding for text content */
+}
+
+QTextEdit:hover {
+    border: 2px solid #FF6600; /* Red border on hover */
+}
+
+QTextEdit:focus {
+    border: 2px solid #FF3300; /* Red border when QTextEdit is in focus */
+}
+</string>
          </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

@@ -61,5 +61,6 @@ class SenderSite():
             encrypted_file = cipher.encrypt(data)
 
             self.client.sendall(encrypted_file)
+            
             self.client.send(b"<END>")
             self.client.close()
