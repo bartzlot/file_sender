@@ -49,7 +49,6 @@ class SendFile(QMainWindow):
         
         key = key.encode('utf-8')
         nonce = key
-        print(key)
         self.cipher = AES.new(key, AES.MODE_EAX, nonce)
 
         return True
