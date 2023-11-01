@@ -22,7 +22,7 @@ class RecieveFile(QMainWindow):
         self.choose_dir_button = self.findChild(QPushButton, "choose_dir_button")
         self.save_file_button = self.findChild(QPushButton, "save_file_button")
 
-        self.sending_progress_bar = self.findChild(QProgressBar, "saving_progress_bar")
+        self.status_bar = self.findChild(QProgressBar, "saving_progress_bar")
 
         self.connection_status = self.findChild(QCheckBox, "conn_status_box")
 
@@ -37,6 +37,20 @@ class RecieveFile(QMainWindow):
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.set_server_button.clicked.connect(self.setting_up_server)
         self.save_file_button.clicked.connect(self.saving_file)
+
+        self.recv_server.progress_signal.connect(self.updating_progress_bar_value)
+        self.recv_server.recieving_finished.connect(self.close)
+
+    def updating_progress_bar_value(self, value: int):
+        
+        self.status_bar.setValue(value)
+
+
+    def disabling_buttons(self):
+
+        self.choose_dir_button.setEnabled(False)
+        self.set_server_button.setEnabled(False)
+        self.save_file_button.setEnabled(False)
 
 
     def opening_file_dialog(self):
@@ -114,15 +128,20 @@ class RecieveFile(QMainWindow):
 
                 acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
 
-                self.recv_server.show()
+                process = threading.Thread(target=self.recv_server.recieving_file, args=(self.selected_dir, file_name, file_size, self.cipher))
 
                 if acc_status:
                     
-                    # getting_file = threading.Thread(target=self.recv_server.recieving_file, args=(self.selected_dir, file_name, file_size, self.cipher))
+                    
 
-                    self.recv_server.recieving_file(self.selected_dir, file_name, file_size, self.cipher)
-                    self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
-                    self.close()
+                    self.status_bar.setMinimum(0)
+                    self.status_bar.setMaximum(file_size) 
+                    self.status_bar.setValue(0)
+                    
+                    process.start()
+                    self.disabling_buttons()
+                    # self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
+
 
                 else:
                     
@@ -133,6 +152,7 @@ class RecieveFile(QMainWindow):
         except:
 
             self.error_handler.error_handler("Please set valid server firstly...")
+
 
 
 class FileAcceptance(QDialog):
@@ -166,6 +186,7 @@ class FileAcceptance(QDialog):
             return False
 
 #TODO 
-#Add progress bar pyqtsignal
+#Add progress bar pyqtsignal on reciever and sending site
 #work on public IP sending option
+#Add progress in MB left at the bottom of progress bar
 

@@ -2,7 +2,9 @@ from lib import *
 
 
 class RecieverSite(QMainWindow):
-    
+
+    progress_signal = pyqtSignal(int)
+    recieving_finished = pyqtSignal()
 
     def __init__(self) -> None:
 
@@ -11,6 +13,8 @@ class RecieverSite(QMainWindow):
         uic.loadUi(creating_path_to_ui_file("recv_file_status.ui"), self)
 
         self.status_bar = self.findChild(QProgressBar, 'saving_progress_bar')
+
+        
 
         self.IP = None
         self.PORT = None
@@ -109,9 +113,7 @@ class RecieverSite(QMainWindow):
         # acceptance_sig.emit(recieved_file_name, recieved_file_size)
 
         bar_value_update = 0   
-        self.status_bar.setMinimum(0)
-        self.status_bar.setMaximum(recieved_file_size) 
-        self.status_bar.setValue(bar_value_update)
+
 
 
         dir = pathlib.Path(dir_to_save)
@@ -125,10 +127,11 @@ class RecieverSite(QMainWindow):
 
         while not done:
 
-            data = self.client.recv(2048)
+            data = self.client.recv(32768)
 
-            bar_value_update += 2048
-            self.status_bar.setValue(bar_value_update)
+            bar_value_update += 32768
+
+            self.progress_signal.emit(bar_value_update)
 
             if file_to_save_bytes[-5:] == b"<END>":
                 done = True
@@ -143,7 +146,7 @@ class RecieverSite(QMainWindow):
         file_to_save.close()
         self.client.close()
         self.server.close()
-
+        self.recieving_finished.emit()
         print("file recieved")
 
 

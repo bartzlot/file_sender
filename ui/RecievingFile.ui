@@ -415,6 +415,32 @@ QMainWindow QPushButton:pressed {
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QProgressBar" name="saving_progress_bar">
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QProgressBar {
+    border: 2px solid #FF4500; /* Add a red border */
+    border-radius: 10px; /* Make the progress bar rounded */
+    text-align: center; /* Center the text inside the progress bar */
+    font-size: 14px; /* Set the font size */
+    color: #FFF; /* Set the text color to white */
+}
+
+QProgressBar::chunk {
+    background-color: #FF4500; /* Set the progress bar chunk color to red */
+}</string>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
