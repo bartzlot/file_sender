@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>230</width>
-    <height>155</height>
+    <height>167</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,7 +40,7 @@
 }</string>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;File has been received&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -75,7 +75,7 @@
 }</string>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;/Users/macaron/Desktop/SciLab_scripts&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -100,7 +100,7 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">QMainWindow QPushButton {
+    <string notr="true">QPushButton {
     background-color: #CC3300; /* Darker red background color */
     color: #FFF; /* White text color */
     border: none; /* Remove the button border */
@@ -108,11 +108,11 @@
     padding: 10px; /* Adjust padding for button content */
 }
 
-QMainWindow QPushButton:hover {
+QPushButton:hover {
     background-color: #FF4500; /* Lighter red background color on hover */
 }
 
-QMainWindow QPushButton:pressed {
+QPushButton:pressed {
     background-color: #AA2200; /* Even darker red background color when pressed */
 }</string>
    </property>

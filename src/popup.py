@@ -2,9 +2,9 @@ from lib import *
 
 class PopupInfo(QWidget):
 
-    def __init__(self, parent: QWidget) -> None:
+    def __init__(self) -> None:
 
-        super().__init__(parent)
+        super().__init__()
         uic.loadUi(creating_path_to_ui_file("info_dialog.ui"), self)
 
         self.info_label = self.findChild(QLabel, "info_label")
@@ -22,4 +22,5 @@ class PopupInfo(QWidget):
     def setting_labels(self, info: str, path: str):
 
         self.info_label.setText(info)
-        self.dir_label.setText(path)
+        self.dir_label.setText(str(path))
+        self.show()

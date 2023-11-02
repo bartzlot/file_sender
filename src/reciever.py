@@ -5,7 +5,7 @@ class RecieverSite(QMainWindow):
 
     progress_signal = pyqtSignal(int)
     progress_label_signal = pyqtSignal(int, int)
-    recieving_finished = pyqtSignal()
+    recieving_finished = pyqtSignal(str)
 
     def __init__(self) -> None:
 
@@ -20,7 +20,6 @@ class RecieverSite(QMainWindow):
         self.IP = None
         self.PORT = None
         self.ADDR = None
-        self.popup = PopupInfo()
      
     def get_public_ip(self):
         
@@ -94,24 +93,7 @@ class RecieverSite(QMainWindow):
 
     def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size, cipher):
 
-        # self.server.listen()
-        # self.client, self.addr = self.server.accept()
-
-        # metadata = self.client.recv(1024).decode('utf-8')
-
-        # recieved_file_name, recieved_file_size = metadata.split('\O')
-        # recieved_file_size = int(recieved_file_size)
-        # print(recieved_file_name, recieved_file_size)
-        # metadata = json.loads(self.client.recv(1024).decode('utf-8'))
-        # recieved_file_name = metadata["file_name"]
-        # recieved_file_size = metadata["file_size"]
-        
-        # acceptance_sig = pyqtSignal.emit(str, int)
-        # acceptance_sig.emit(recieved_file_name, recieved_file_size)
-
         bar_value_update = 0   
-
-
 
         dir = pathlib.Path(dir_to_save)
         recieved_file_name = dir.joinpath(recieved_file_name)
@@ -144,8 +126,7 @@ class RecieverSite(QMainWindow):
         file_to_save.close()
         self.client.close()
         self.server.close()
-        self.recieving_finished.emit()
-        self.popup.setting_labels("File has been recieved", recieved_file_name)
-        self.popup.show()
+        self.recieving_finished.emit(str(recieved_file_name))
+
 
 

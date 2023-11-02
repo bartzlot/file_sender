@@ -28,6 +28,8 @@ class RecieveFile(QMainWindow):
 
         self.recv_server = RecieverSite()
         self.error_handler = Errorhandler()
+        self.popup = PopupInfo()
+
         self.IP = self.recv_server.get_public_ip()
         self.PORT = None
 
@@ -40,7 +42,13 @@ class RecieveFile(QMainWindow):
 
         self.recv_server.progress_signal.connect(self.updating_progress_bar_value)
         self.recv_server.progress_label_signal.connect(self.updating_progress_label_value)
-        self.recv_server.recieving_finished.connect(self.close)
+        self.recv_server.recieving_finished.connect(self.close_and_popup)
+
+    def close_and_popup(self, filename):
+        
+        self.close()
+        self.popup.setting_labels("File has been recieved", filename)
+        self.popup.show()
 
 
     def updating_progress_label_value(self, value: int, max_value: int):

@@ -3,13 +3,14 @@ from lib import *
 class SenderSite(QMainWindow):
 
     sending_progress = pyqtSignal(int)
+    sending_completed = pyqtSignal()
 
     def __init__(self) -> None:
-
+        super().__init__()
+        
         self.IP = None
         self.PORT = None
         self.ADDR = None
-        self.PACKAGE_SIZE = 1024
         self.FORMAT = "utf-8"
 
 
