@@ -10,10 +10,10 @@ class RecieveFile(QMainWindow):
 
         uic.loadUi(creating_path_to_ui_file("RecievingFile.ui"), self)
 
-        
-
         self.ip_label = self.findChild(QLabel, "ip_label")
+        self.ip_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.dir_label = self.findChild(QLabel, "dir_label")
+        self.progress_label = self.findChild(QLabel, "progress_label")
 
         self.port_text_edit = self.findChild(QTextEdit, "port_text_edit")
         self.aes_text_edit = self.findChild(QTextEdit, "aes_texedit")
@@ -39,7 +39,17 @@ class RecieveFile(QMainWindow):
         self.save_file_button.clicked.connect(self.saving_file)
 
         self.recv_server.progress_signal.connect(self.updating_progress_bar_value)
+        self.recv_server.progress_label_signal.connect(self.updating_progress_label_value)
         self.recv_server.recieving_finished.connect(self.close)
+
+
+    def updating_progress_label_value(self, value: int, max_value: int):
+        
+        MB_value = round(float(value / 1048576), 2)
+        max_MB_value = round(float(max_value / 1048576), 2)
+        text = f'{MB_value} / {max_MB_value} MB'
+        self.progress_label.setText(text)
+
 
     def updating_progress_bar_value(self, value: int):
         
@@ -93,10 +103,10 @@ class RecieveFile(QMainWindow):
 
         key = key.encode('utf-8')
         nonce = key
-        print(key)
         self.cipher = AES.new(key, AES.MODE_EAX, nonce)
 
         return True
+
 
     def setting_up_server(self):
 
@@ -154,7 +164,6 @@ class RecieveFile(QMainWindow):
             self.error_handler.error_handler("Please set valid server firstly...")
 
 
-
 class FileAcceptance(QDialog):
 
 
@@ -174,7 +183,7 @@ class FileAcceptance(QDialog):
 
     def getting_acceptance_satus(self, file_label, file_size):
         self.file_name_label.setText(file_label)
-        self.file_size_label.setText(str(file_size))
+        self.file_size_label.setText(str(f'{round(float(file_size / 1048576), 2)} MB'))
         result = self.exec()
 
         if result == QDialog.DialogCode.Accepted:
@@ -188,5 +197,6 @@ class FileAcceptance(QDialog):
 #TODO 
 #Add progress bar pyqtsignal on reciever and sending site
 #work on public IP sending option
-#Add progress in MB left at the bottom of progress bar
+#set windows to not be resizable
+#Add popup window after file receiving 
 

@@ -4,6 +4,7 @@ from lib import *
 class RecieverSite(QMainWindow):
 
     progress_signal = pyqtSignal(int)
+    progress_label_signal = pyqtSignal(int, int)
     recieving_finished = pyqtSignal()
 
     def __init__(self) -> None:
@@ -30,12 +31,10 @@ class RecieverSite(QMainWindow):
             s.connect(("8.8.8.8", 80))
             
             public_ip = s.getsockname()[0]
-            print(public_ip)
             return public_ip
         
         except Exception as e:
 
-            print(f"Error: {e}")
 
             return None
 
@@ -74,7 +73,6 @@ class RecieverSite(QMainWindow):
 
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(self.ADDR)
-        print("server binded")
     
 
     def file_acceptance(self):
@@ -86,7 +84,6 @@ class RecieverSite(QMainWindow):
 
         recieved_file_name, recieved_file_size = metadata.split('\O')
         recieved_file_size = int(recieved_file_size)        
-        print(recieved_file_name, recieved_file_size)
         
         return recieved_file_name, recieved_file_size
     
@@ -132,6 +129,7 @@ class RecieverSite(QMainWindow):
             bar_value_update += 32768
 
             self.progress_signal.emit(bar_value_update)
+            self.progress_label_signal.emit(bar_value_update, recieved_file_size)
 
             if file_to_save_bytes[-5:] == b"<END>":
                 done = True
@@ -147,6 +145,5 @@ class RecieverSite(QMainWindow):
         self.client.close()
         self.server.close()
         self.recieving_finished.emit()
-        print("file recieved")
 
 

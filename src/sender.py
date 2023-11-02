@@ -1,7 +1,8 @@
 from lib import *
 
-class SenderSite():
+class SenderSite(QMainWindow):
 
+    sending_progress = pyqtSignal(int)
 
     def __init__(self) -> None:
 
@@ -30,7 +31,6 @@ class SenderSite():
 
         except Exception as e:
 
-            print(f'An error has occured: {e}')
             return False, e
         
         return True, ''
@@ -42,33 +42,66 @@ class SenderSite():
         self.client.connect(self.ADDR)
 
 
-    def sending_file(self, path: str, cipher):
+def sending_file(self, path: str, cipher):
 
-        try:
+    try:
 
-            file_size = os.path.getsize(path)
+        file_size = os.path.getsize(path)
+        metadata = f"{os.path.basename(path)}\O{file_size}"
 
-            metadata = f"{os.path.basename(path)}\O{file_size}"
+        self.client.sendall(metadata.encode('utf-8'))
+        acknowledgement = self.client.recv(1024).decode('utf-8')
 
-            self.client.sendall(metadata.encode('utf-8'))
+        if acknowledgement == "ACK":
 
-            acknowledgement = self.client.recv(1024).decode('utf-8')
+            file_to_send = open(path, "rb")
 
-            if acknowledgement == "ACK":
+            while True:
+
+                chunk = file_to_send.read(32768)  
+
+                if not chunk:
+                    
+                    break
+
+                encrypted_chunk = cipher.encrypt(chunk)
+                self.client.sendall(encrypted_chunk)
+
+            self.client.send(b"<END>")
+            self.client.close()
+
+            return True, ''
+
+    except Exception as e:
+        return False, e
+    
+    # def sending_file(self, path: str, cipher):
+
+    #     try:
+
+    #         file_size = os.path.getsize(path)
+
+    #         metadata = f"{os.path.basename(path)}\O{file_size}"
+
+    #         self.client.sendall(metadata.encode('utf-8'))
+
+    #         acknowledgement = self.client.recv(1024).decode('utf-8')
+
+    #         if acknowledgement == "ACK":
 
 
-                file_to_send = open(path, "rb")
-                data = file_to_send.read()
+    #             file_to_send = open(path, "rb")
+    #             data = file_to_send.read()
 
-                encrypted_file = cipher.encrypt(data)
+    #             encrypted_file = cipher.encrypt(data)
 
-                self.client.sendall(encrypted_file)
+    #             self.client.sendall(encrypted_file)
                 
-                self.client.send(b"<END>")
-                self.client.close()
+    #             self.client.send(b"<END>")
+    #             self.client.close()
                 
-                return True, ''
+    #             return True, ''
 
-        except Exception as e:
+    #     except Exception as e:
             
-            return False, e
+    #         return False, e
