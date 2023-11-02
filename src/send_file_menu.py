@@ -87,19 +87,12 @@ class SendFile(QMainWindow):
 
 
     def sending_file(self):
-        
+
         try:
 
             if self.validity is True and os.path.isfile(self.selected_file) == True:
 
-                file_sended, error = self.sender_client.sending_file(self.selected_file, self.cipher)
-
-                if not file_sended:
-
-                    self.error_handler.error_handler(error)
-
-                self.close()
-
+                self.sender_client.sending_file(self.selected_file, self.cipher)
                 
             else:
 
