@@ -35,6 +35,7 @@ class SendFile(QMainWindow):
 
         upload_speed = threading.Thread(target=self.getting_uploading_speed)
         upload_speed.start()
+
         self.set_connection_button.clicked.connect(self.setting_connection)
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.send_file_button.clicked.connect(self.sending_file)
@@ -48,8 +49,8 @@ class SendFile(QMainWindow):
 
         st = speedtest.Speedtest()
         self.uploading_speed= st.upload()
-        self.uploading_speed = round(self.uploading_speed)
-        print(self.uploading_speed)
+        self.uploading_speed = round(self.uploading_speed) / 2
+
 
     def updating_progress_bar(self, value: int):
 

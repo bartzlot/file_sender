@@ -53,8 +53,7 @@ class RecieveFile(QMainWindow):
 
         st = speedtest.Speedtest()
         self.downloading_speed = st.download()
-        self.downloading_speed = round(self.downloading_speed)
-        print(self.downloading_speed)
+        self.downloading_speed = int(round(self.downloading_speed))
 
 
     def close_and_popup(self, filename):
@@ -66,8 +65,8 @@ class RecieveFile(QMainWindow):
 
     def updating_progress_label_value(self, value: int, max_value: int):
         
-        MB_value = round(float(value / 1048576), 2)
-        max_MB_value = round(float(max_value / 1048576), 2)
+        MB_value = round(float(value / 1000000), 2)
+        max_MB_value = round(float(max_value / 1000000), 2)
         text = f'{MB_value} / {max_MB_value} MB'
         self.progress_label.setText(text)
 
@@ -204,7 +203,7 @@ class FileAcceptance(QDialog):
     def getting_acceptance_satus(self, file_label, file_size):
         
         self.file_name_label.setText(file_label)
-        self.file_size_label.setText(str(f'{round(float(file_size / 1048576), 2)} MB'))
+        self.file_size_label.setText(str(f'{round(float(file_size / 1000000), 2)} MB'))
         result = self.exec()
 
         if result == QDialog.DialogCode.Accepted:
