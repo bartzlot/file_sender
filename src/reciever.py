@@ -86,6 +86,7 @@ class RecieverSite(QMainWindow):
         
         return recieved_file_name, recieved_file_size
     
+
     def break_connection(self):
         
         self.client.close()
@@ -114,9 +115,11 @@ class RecieverSite(QMainWindow):
             self.progress_label_signal.emit(bar_value_update, recieved_file_size)
 
             if file_to_save_bytes[-5:] == b"<END>":
+
                 done = True
 
             else:
+                
                 file_to_save_bytes += data
 
         decrypted_file = cipher.decrypt(file_to_save_bytes[:-5])

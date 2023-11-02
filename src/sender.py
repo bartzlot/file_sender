@@ -4,6 +4,7 @@ class SenderSite(QMainWindow):
 
     sending_progress = pyqtSignal(int)
     sending_completed = pyqtSignal(str)
+    sending_progress_values = pyqtSignal(int, int)
 
     def __init__(self) -> None:
         super().__init__()
@@ -43,32 +44,37 @@ class SenderSite(QMainWindow):
         self.client.connect(self.ADDR)
 
 
-def sending_file(self, path: str, cipher):
+    def sending_file(self, path: str, cipher):
 
-    file_size = os.path.getsize(path)
-    metadata = f"{os.path.basename(path)}\O{file_size}"
+        file_size = os.path.getsize(path)
+        metadata = f"{os.path.basename(path)}\O{file_size}"
 
-    self.client.sendall(metadata.encode('utf-8'))
-    acknowledgement = self.client.recv(1024).decode('utf-8')
+        self.client.sendall(metadata.encode('utf-8'))
 
-    if acknowledgement == "ACK":
+        acknowledgement = self.client.recv(1024).decode('utf-8')
 
-        file_to_send = open(path, "rb")
+        already_sent_bytes_amount = 0
+        if acknowledgement == "ACK":
 
-        while True:
+            file_to_send = open(path, "rb")
 
-            chunk = file_to_send.read(32768)  
+            while True:
 
-            if not chunk:
+                chunk = file_to_send.read(32768)  
                 
-                break
+                if not chunk:
+                    
+                    break
+                    
+                encrypted_chunk = cipher.encrypt(chunk)
+                self.client.sendall(encrypted_chunk)
+                already_sent_bytes_amount += 32768
+                self.sending_progress.emit(already_sent_bytes_amount)
+                self.sending_progress_values.emit(already_sent_bytes_amount, file_size)
 
-            encrypted_chunk = cipher.encrypt(chunk)
-            self.client.sendall(encrypted_chunk)
-
-        self.client.send(b"<END>")
-        self.client.close()
-        self.sending_completed.emit(str(path))
+            self.client.send(b"<END>")
+            self.client.close()
+            self.sending_completed.emit(str(path))
 
     
     # def sending_file(self, path: str, cipher):
