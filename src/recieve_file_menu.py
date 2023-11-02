@@ -26,6 +26,8 @@ class RecieveFile(QMainWindow):
 
         self.connection_status = self.findChild(QCheckBox, "conn_status_box")
 
+        self.downloading_speed = 1024
+
         self.recv_server = RecieverSite()
         self.error_handler = Errorhandler()
         self.popup = PopupInfo()
@@ -35,6 +37,8 @@ class RecieveFile(QMainWindow):
 
         self.ip_label.setText(self.IP)
 
+        download_speeds = threading.Thread(target=self.getting_downloading_speed)
+        download_speeds.start()
 
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.set_server_button.clicked.connect(self.setting_up_server)
@@ -43,6 +47,15 @@ class RecieveFile(QMainWindow):
         self.recv_server.progress_signal.connect(self.updating_progress_bar_value)
         self.recv_server.progress_label_signal.connect(self.updating_progress_label_value)
         self.recv_server.recieving_finished.connect(self.close_and_popup)
+
+
+    def getting_downloading_speed(self):
+
+        st = speedtest.Speedtest()
+        self.downloading_speed = st.download()
+        self.downloading_speed = round(self.downloading_speed)
+        print(self.downloading_speed)
+
 
     def close_and_popup(self, filename):
         
@@ -146,7 +159,7 @@ class RecieveFile(QMainWindow):
 
                 acc_status = self.file_acceptance.getting_acceptance_satus(file_name, file_size)
 
-                process = threading.Thread(target=self.recv_server.recieving_file, args=(self.selected_dir, file_name, file_size, self.cipher))
+                process = threading.Thread(target=self.recv_server.recieving_file, args=(self.selected_dir, file_name, file_size, self.cipher, self.downloading_speed))
 
                 if acc_status:
                     
@@ -158,7 +171,6 @@ class RecieveFile(QMainWindow):
                     
                     process.start()
                     self.disabling_buttons()
-                    # self.connection_status.setStyleSheet("QCheckBox::indicator::unchecked {background-color:#00CC00 ;}")
 
 
                 else:
@@ -204,8 +216,9 @@ class FileAcceptance(QDialog):
             return False
 
 #TODO 
-#Add progress bar pyqtsignal on reciever and sending site
 #work on public IP sending option
 #set windows to not be resizable
-#Add popup window after file receiving 
+#error handling
+#maybe some more threading could be done
+
 

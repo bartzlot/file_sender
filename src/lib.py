@@ -4,6 +4,8 @@ import pathlib
 import requests
 import socket
 import json
+import time
+import speedtest
 from Crypto.Cipher import AES
 import Crypto.Random
 import threading

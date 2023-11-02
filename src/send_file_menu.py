@@ -27,10 +27,14 @@ class SendFile(QMainWindow):
 
         self.sending_progress_bar = self.findChild(QProgressBar, "sending_progress_bar")
 
+        self.uploading_speed = 1024
+
         self.sender_client = SenderSite()
         self.error_handler = Errorhandler()
-        self.popup = PopupInfo()
+        self.popup_sent = PopupInfo()
 
+        upload_speed = threading.Thread(target=self.getting_uploading_speed)
+        upload_speed.start()
         self.set_connection_button.clicked.connect(self.setting_connection)
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.send_file_button.clicked.connect(self.sending_file)
@@ -38,6 +42,14 @@ class SendFile(QMainWindow):
         self.sender_client.sending_progress.connect(self.updating_progress_bar)
         self.sender_client.sending_completed.connect(self.close_and_popup)
         self.sender_client.sending_progress_values.connect(self.updating_progress_label_value)
+
+
+    def getting_uploading_speed(self):
+
+        st = speedtest.Speedtest()
+        self.uploading_speed= st.upload()
+        self.uploading_speed = round(self.uploading_speed)
+        print(self.uploading_speed)
 
     def updating_progress_bar(self, value: int):
 
@@ -47,8 +59,8 @@ class SendFile(QMainWindow):
     def close_and_popup(self, filename):
         
         self.close()
-        self.popup.setting_labels("File has been recieved", filename)
-        self.popup.show()
+        self.popup_sent.setting_labels("File has been sent", filename)
+        self.popup_sent.show()
 
 
     def disabling_buttons(self):
@@ -120,9 +132,10 @@ class SendFile(QMainWindow):
 
                 self.sending_progress_bar.setMinimum(0)
                 self.sending_progress_bar.setMaximum(os.path.getsize(self.selected_file))
-                process = threading.Thread(target=self.sender_client.sending_file, args=(self.selected_file, self.cipher))
+                process = threading.Thread(target=self.sender_client.sending_file, args=(self.selected_file, self.cipher, self.uploading_speed))
                 process.start()
                 self.disabling_buttons()
+                
             else:
 
                 self.error_handler.error_handler("Please select correct file or set proper connection...")

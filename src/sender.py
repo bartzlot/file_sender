@@ -44,7 +44,7 @@ class SenderSite(QMainWindow):
         self.client.connect(self.ADDR)
 
 
-    def sending_file(self, path: str, cipher):
+    def sending_file(self, path: str, cipher, BUFFER_SIZE: int):
 
         file_size = os.path.getsize(path)
         metadata = f"{os.path.basename(path)}\O{file_size}"
@@ -60,7 +60,7 @@ class SenderSite(QMainWindow):
 
             while True:
 
-                chunk = file_to_send.read(32768)  
+                chunk = file_to_send.read(BUFFER_SIZE)  
                 
                 if not chunk:
                     
@@ -68,7 +68,7 @@ class SenderSite(QMainWindow):
                     
                 encrypted_chunk = cipher.encrypt(chunk)
                 self.client.sendall(encrypted_chunk)
-                already_sent_bytes_amount += 32768
+                already_sent_bytes_amount += BUFFER_SIZE
                 self.sending_progress.emit(already_sent_bytes_amount)
                 self.sending_progress_values.emit(already_sent_bytes_amount, file_size)
 

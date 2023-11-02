@@ -92,9 +92,7 @@ class RecieverSite(QMainWindow):
         self.client.close()
 
 
-    def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size, cipher):
-
-        bar_value_update = 0   
+    def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size, cipher, BUFFER_SIZE):
 
         dir = pathlib.Path(dir_to_save)
         recieved_file_name = dir.joinpath(recieved_file_name)
@@ -104,24 +102,22 @@ class RecieverSite(QMainWindow):
         done = False
 
         self.client.sendall("ACK".encode('utf-8'))
-
+        
+        
         while not done:
-
-            data = self.client.recv(32768)
-
-            bar_value_update += 32768
-
-            self.progress_signal.emit(bar_value_update)
-            self.progress_label_signal.emit(bar_value_update, recieved_file_size)
-
+            
+            data = self.client.recv(BUFFER_SIZE)
+            
             if file_to_save_bytes[-5:] == b"<END>":
 
                 done = True
 
             else:
-                
-                file_to_save_bytes += data
 
+                file_to_save_bytes += data
+                self.progress_signal.emit(len(file_to_save_bytes))
+                self.progress_label_signal.emit(len(file_to_save_bytes), recieved_file_size)
+        
         decrypted_file = cipher.decrypt(file_to_save_bytes[:-5])
         
         file_to_save.write(decrypted_file)
