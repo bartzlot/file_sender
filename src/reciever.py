@@ -20,7 +20,7 @@ class RecieverSite(QMainWindow):
         self.IP = None
         self.PORT = None
         self.ADDR = None
-     
+        self.popup = PopupInfo()
      
     def get_public_ip(self):
         
@@ -145,5 +145,7 @@ class RecieverSite(QMainWindow):
         self.client.close()
         self.server.close()
         self.recieving_finished.emit()
+        self.popup.setting_labels("File has been recieved", recieved_file_name)
+        self.popup.show()
 
 

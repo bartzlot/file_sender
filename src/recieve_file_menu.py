@@ -182,6 +182,7 @@ class FileAcceptance(QDialog):
 
 
     def getting_acceptance_satus(self, file_label, file_size):
+        
         self.file_name_label.setText(file_label)
         self.file_size_label.setText(str(f'{round(float(file_size / 1048576), 2)} MB'))
         result = self.exec()
