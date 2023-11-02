@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>230</width>
+    <height>167</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Informator</string>
+  </property>
+  <widget class="QLabel" name="info_label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>231</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>-1</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 20px; /* Larger font size */
+    font-weight: bold; /* Make the text bold */
+    color: #00FF00; /* Red text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
+}</string>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="file_dir">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>211</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>-1</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 15px; /* Larger font size */
+    color: #FF8C00; /* Red text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
+}</string>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="confirm_button">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>211</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>400</width>
+     <height>40</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #CC3300; /* Darker red background color */
+    color: #FFF; /* White text color */
+    border: none; /* Remove the button border */
+    border-radius: 20px; /* Make the button round by increasing border-radius */
+    padding: 10px; /* Adjust padding for button content */
+}
+
+QPushButton:hover {
+    background-color: #FF4500; /* Lighter red background color on hover */
+}
+
+QPushButton:pressed {
+    background-color: #AA2200; /* Even darker red background color when pressed */
+}</string>
+   </property>
+   <property name="text">
+    <string>Great!</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

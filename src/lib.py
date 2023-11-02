@@ -23,6 +23,7 @@ from PyQt6.QtCore import (Qt, QDate, QDateTime,
 from PyQt6 import QtCore, uic
 
 from utilities import creating_path_to_ui_file, Errorhandler
+from popup import PopupInfo
 from sender import SenderSite
 from reciever import RecieverSite
 from send_file_menu import SendFile

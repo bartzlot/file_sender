@@ -4,7 +4,8 @@ from lib import *
 class RecieverSite(QMainWindow):
 
     progress_signal = pyqtSignal(int)
-    recieving_finished = pyqtSignal()
+    progress_label_signal = pyqtSignal(int, int)
+    recieving_finished = pyqtSignal(str)
 
     def __init__(self) -> None:
 
@@ -20,7 +21,6 @@ class RecieverSite(QMainWindow):
         self.PORT = None
         self.ADDR = None
      
-     
     def get_public_ip(self):
         
         try:
@@ -30,12 +30,10 @@ class RecieverSite(QMainWindow):
             s.connect(("8.8.8.8", 80))
             
             public_ip = s.getsockname()[0]
-            print(public_ip)
             return public_ip
         
         except Exception as e:
 
-            print(f"Error: {e}")
 
             return None
 
@@ -74,7 +72,6 @@ class RecieverSite(QMainWindow):
 
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(self.ADDR)
-        print("server binded")
     
 
     def file_acceptance(self):
@@ -86,10 +83,10 @@ class RecieverSite(QMainWindow):
 
         recieved_file_name, recieved_file_size = metadata.split('\O')
         recieved_file_size = int(recieved_file_size)        
-        print(recieved_file_name, recieved_file_size)
         
         return recieved_file_name, recieved_file_size
     
+
     def break_connection(self):
         
         self.client.close()
@@ -97,24 +94,7 @@ class RecieverSite(QMainWindow):
 
     def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size, cipher):
 
-        # self.server.listen()
-        # self.client, self.addr = self.server.accept()
-
-        # metadata = self.client.recv(1024).decode('utf-8')
-
-        # recieved_file_name, recieved_file_size = metadata.split('\O')
-        # recieved_file_size = int(recieved_file_size)
-        # print(recieved_file_name, recieved_file_size)
-        # metadata = json.loads(self.client.recv(1024).decode('utf-8'))
-        # recieved_file_name = metadata["file_name"]
-        # recieved_file_size = metadata["file_size"]
-        
-        # acceptance_sig = pyqtSignal.emit(str, int)
-        # acceptance_sig.emit(recieved_file_name, recieved_file_size)
-
         bar_value_update = 0   
-
-
 
         dir = pathlib.Path(dir_to_save)
         recieved_file_name = dir.joinpath(recieved_file_name)
@@ -132,11 +112,14 @@ class RecieverSite(QMainWindow):
             bar_value_update += 32768
 
             self.progress_signal.emit(bar_value_update)
+            self.progress_label_signal.emit(bar_value_update, recieved_file_size)
 
             if file_to_save_bytes[-5:] == b"<END>":
+
                 done = True
 
             else:
+                
                 file_to_save_bytes += data
 
         decrypted_file = cipher.decrypt(file_to_save_bytes[:-5])
@@ -146,7 +129,7 @@ class RecieverSite(QMainWindow):
         file_to_save.close()
         self.client.close()
         self.server.close()
-        self.recieving_finished.emit()
-        print("file recieved")
+        self.recieving_finished.emit(str(recieved_file_name))
+
 
 

@@ -1,14 +1,17 @@
 from lib import *
 
-class SenderSite():
+class SenderSite(QMainWindow):
 
+    sending_progress = pyqtSignal(int)
+    sending_completed = pyqtSignal(str)
+    sending_progress_values = pyqtSignal(int, int)
 
     def __init__(self) -> None:
-
+        super().__init__()
+        
         self.IP = None
         self.PORT = None
         self.ADDR = None
-        self.PACKAGE_SIZE = 1024
         self.FORMAT = "utf-8"
 
 
@@ -30,7 +33,6 @@ class SenderSite():
 
         except Exception as e:
 
-            print(f'An error has occured: {e}')
             return False, e
         
         return True, ''
@@ -44,31 +46,64 @@ class SenderSite():
 
     def sending_file(self, path: str, cipher):
 
-        try:
+        file_size = os.path.getsize(path)
+        metadata = f"{os.path.basename(path)}\O{file_size}"
 
-            file_size = os.path.getsize(path)
+        self.client.sendall(metadata.encode('utf-8'))
 
-            metadata = f"{os.path.basename(path)}\O{file_size}"
+        acknowledgement = self.client.recv(1024).decode('utf-8')
 
-            self.client.sendall(metadata.encode('utf-8'))
+        already_sent_bytes_amount = 0
+        if acknowledgement == "ACK":
 
-            acknowledgement = self.client.recv(1024).decode('utf-8')
+            file_to_send = open(path, "rb")
 
-            if acknowledgement == "ACK":
+            while True:
 
-
-                file_to_send = open(path, "rb")
-                data = file_to_send.read()
-
-                encrypted_file = cipher.encrypt(data)
-
-                self.client.sendall(encrypted_file)
+                chunk = file_to_send.read(32768)  
                 
-                self.client.send(b"<END>")
-                self.client.close()
-                
-                return True, ''
+                if not chunk:
+                    
+                    break
+                    
+                encrypted_chunk = cipher.encrypt(chunk)
+                self.client.sendall(encrypted_chunk)
+                already_sent_bytes_amount += 32768
+                self.sending_progress.emit(already_sent_bytes_amount)
+                self.sending_progress_values.emit(already_sent_bytes_amount, file_size)
 
-        except Exception as e:
+            self.client.send(b"<END>")
+            self.client.close()
+            self.sending_completed.emit(str(path))
+
+    
+    # def sending_file(self, path: str, cipher):
+
+    #     try:
+
+    #         file_size = os.path.getsize(path)
+
+    #         metadata = f"{os.path.basename(path)}\O{file_size}"
+
+    #         self.client.sendall(metadata.encode('utf-8'))
+
+    #         acknowledgement = self.client.recv(1024).decode('utf-8')
+
+    #         if acknowledgement == "ACK":
+
+
+    #             file_to_send = open(path, "rb")
+    #             data = file_to_send.read()
+
+    #             encrypted_file = cipher.encrypt(data)
+
+    #             self.client.sendall(encrypted_file)
+                
+    #             self.client.send(b"<END>")
+    #             self.client.close()
+                
+    #             return True, ''
+
+    #     except Exception as e:
             
-            return False, e
+    #         return False, e

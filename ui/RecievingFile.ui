@@ -441,6 +441,32 @@ QProgressBar::chunk {
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QLabel" name="progress_label">
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>13</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 15px; /* Larger font size */
+    color: #FF8080; /* Text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
+
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>

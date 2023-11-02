@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
+    <width>666</width>
     <height>309</height>
    </rect>
   </property>
@@ -330,7 +330,7 @@ QCheckBox::indicator::unchecked {
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>390</x>
       <y>10</y>
       <width>271</width>
       <height>291</height>
@@ -452,6 +452,32 @@ QProgressBar::chunk {
        </property>
        <property name="value">
         <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="progress_label">
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>13</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    font-family: Arial, sans-serif;
+    font-size: 15px; /* Larger font size */
+    color: #FF8080; /* Text color (example: DarkOrange) */
+    background: transparent; /* No background */
+    text-align: center; /* Center the text horizontally */
+
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
