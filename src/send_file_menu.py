@@ -27,10 +27,17 @@ class SendFile(QMainWindow):
 
         self.sender_client = SenderSite()
         self.error_handler = Errorhandler()
+        self.popup = PopupInfo()
 
         self.set_connection_button.clicked.connect(self.setting_connection)
         self.choose_dir_button.clicked.connect(self.opening_file_dialog)
         self.send_file_button.clicked.connect(self.sending_file)
+
+    def close_and_popup(self, filename):
+        
+        self.close()
+        self.popup.setting_labels("File has been recieved", filename)
+        self.popup.show()
 
 
     def generating_aes_key(self):
@@ -81,17 +88,23 @@ class SendFile(QMainWindow):
 
     def sending_file(self):
         
-        if self.validity is True and os.path.isfile(self.selected_file) == True:
+        try:
 
-            file_sended, error = self.sender_client.sending_file(self.selected_file, self.cipher)
+            if self.validity is True and os.path.isfile(self.selected_file) == True:
 
-            if not file_sended:
+                file_sended, error = self.sender_client.sending_file(self.selected_file, self.cipher)
 
-                self.error_handler.error_handler(error)
+                if not file_sended:
 
-            self.close()
+                    self.error_handler.error_handler(error)
 
-            
-        else:
+                self.close()
 
-            self.error_handler.error_handler("Please select correct file or set proper connection...")
+                
+            else:
+
+                self.error_handler.error_handler("Please select correct file or set proper connection...")
+        
+        except:
+
+            self.error_handler.error_handler("Sending file has been terminated by server...")

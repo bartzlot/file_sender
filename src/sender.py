@@ -3,7 +3,7 @@ from lib import *
 class SenderSite(QMainWindow):
 
     sending_progress = pyqtSignal(int)
-    sending_completed = pyqtSignal()
+    sending_completed = pyqtSignal(str)
 
     def __init__(self) -> None:
         super().__init__()
@@ -45,36 +45,31 @@ class SenderSite(QMainWindow):
 
 def sending_file(self, path: str, cipher):
 
-    try:
+    file_size = os.path.getsize(path)
+    metadata = f"{os.path.basename(path)}\O{file_size}"
 
-        file_size = os.path.getsize(path)
-        metadata = f"{os.path.basename(path)}\O{file_size}"
+    self.client.sendall(metadata.encode('utf-8'))
+    acknowledgement = self.client.recv(1024).decode('utf-8')
 
-        self.client.sendall(metadata.encode('utf-8'))
-        acknowledgement = self.client.recv(1024).decode('utf-8')
+    if acknowledgement == "ACK":
 
-        if acknowledgement == "ACK":
+        file_to_send = open(path, "rb")
 
-            file_to_send = open(path, "rb")
+        while True:
 
-            while True:
+            chunk = file_to_send.read(32768)  
 
-                chunk = file_to_send.read(32768)  
+            if not chunk:
+                
+                break
 
-                if not chunk:
-                    
-                    break
+            encrypted_chunk = cipher.encrypt(chunk)
+            self.client.sendall(encrypted_chunk)
 
-                encrypted_chunk = cipher.encrypt(chunk)
-                self.client.sendall(encrypted_chunk)
+        self.client.send(b"<END>")
+        self.client.close()
+        self.sending_completed.emit(str(path))
 
-            self.client.send(b"<END>")
-            self.client.close()
-
-            return True, ''
-
-    except Exception as e:
-        return False, e
     
     # def sending_file(self, path: str, cipher):
 
