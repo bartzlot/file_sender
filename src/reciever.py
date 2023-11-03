@@ -22,7 +22,12 @@ class RecieverSite(QMainWindow):
         self.ADDR = None
      
     def get_public_ip(self):
-        
+        """
+        Get the public IP address of the server using a socket connection to a known server.
+
+        Returns:
+        - public_ip (str): The public IP address of the server.
+        """        
         try:
 
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -39,14 +44,29 @@ class RecieverSite(QMainWindow):
 
 
     def get_port(self):
+        """
+        Prompt the user for an open port number for the server.
 
+        Returns:
+        - port (int): The user-entered port number.
+        """
         port = int(input("Please insert open port: "))
 
         return port
     
 
-    def setting_server_addr(self, ip, port):
+    def setting_server_addr(self, ip: str, port: str):
+        """
+        Set the server's IP address and port.
 
+        Parameters:
+        - ip (str): The IP address.
+        - port (str): The port number as a string.
+
+        Returns:
+        - validity (bool): True if the server is set up successfully, False otherwise.
+        - error (str): An error message in case of failure.
+        """
         if port == '' or ip == '':
             return False, 'Port or IP text-box is empty...'
         
@@ -68,14 +88,25 @@ class RecieverSite(QMainWindow):
         return True, ''
 
 
-    def create_server(self, ADDR):
+    def create_server(self, ADDR: set):
+        """
+        Create a server socket and bind it to the specified address.
 
+        Parameters:
+        - ADDR (set): A tuple representing the server's address (IP, PORT).
+        """
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(self.ADDR)
     
 
     def file_acceptance(self):
+        """
+        Accept the incoming file and extract its metadata.
 
+        Returns:
+        - recieved_file_name (str): The name of the received file.
+        - recieved_file_size (int): The size of the received file in bytes.
+        """
         self.server.listen()
         self.client, self.addr = self.server.accept()
 
@@ -88,12 +119,23 @@ class RecieverSite(QMainWindow):
     
 
     def break_connection(self):
-        
+        """
+        Close the client socket to break the connection.
+        """
         self.client.close()
 
 
-    def recieving_file(self, dir_to_save, recieved_file_name, recieved_file_size, cipher, BUFFER_SIZE):
+    def recieving_file(self, dir_to_save: str, recieved_file_name: str, recieved_file_size: int, cipher, BUFFER_SIZE: int):
+        """
+        Receive and save the file to the specified directory.
 
+        Parameters:
+        - dir_to_save (str): The directory to save the received file.
+        - recieved_file_name (str): The name of the received file.
+        - recieved_file_size (int): The size of the received file in bytes.
+        - cipher: An encryption object for decrypting the file.
+        - BUFFER_SIZE (int): The size of the data buffer for receiving data.
+        """
         dir = pathlib.Path(dir_to_save)
         recieved_file_name = dir.joinpath(recieved_file_name)
 

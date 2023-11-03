@@ -5,7 +5,9 @@ class RecieveFile(QMainWindow):
 
 
     def __init__(self) -> None:
-
+        """
+        Initializes the RecieveFile application and sets up the GUI components.
+        """
         super().__init__()
 
         uic.loadUi(creating_path_to_ui_file("RecievingFile.ui"), self)
@@ -50,21 +52,34 @@ class RecieveFile(QMainWindow):
 
 
     def getting_downloading_speed(self):
-
+        """
+        Get the current downloading speed using the Speedtest library and update the 'downloading_speed' attribute.
+        """
         st = speedtest.Speedtest()
         self.downloading_speed = st.download()
         self.downloading_speed = int(round(self.downloading_speed))
 
 
-    def close_and_popup(self, filename):
-        
+    def close_and_popup(self, filename: str):
+        """
+        Closes the application window and displays a popup notification with the received filename.
+
+        Parameters:
+        - filename (str): The name of the received file.
+        """
         self.close()
         self.popup.setting_labels("File has been recieved", filename)
         self.popup.show()
 
 
     def updating_progress_label_value(self, value: int, max_value: int):
-        
+        """
+        Update the progress label with current and maximum values in MB.
+
+        Parameters:
+        - value (int): Current progress value.
+        - max_value (int): Maximum progress value.
+        """
         MB_value = round(float(value / 1000000), 2)
         max_MB_value = round(float(max_value / 1000000), 2)
         text = f'{MB_value} / {max_MB_value} MB'
@@ -72,26 +87,40 @@ class RecieveFile(QMainWindow):
 
 
     def updating_progress_bar_value(self, value: int):
-        
+        """
+        Update the progress bar value.
+
+        Parameters:
+        - value (int): Current progress value.
+        """        
         self.status_bar.setValue(value)
 
 
     def disabling_buttons(self):
-
+        """
+        Disable UI buttons to prevent user interaction during file reception.
+        """
         self.choose_dir_button.setEnabled(False)
         self.set_server_button.setEnabled(False)
         self.save_file_button.setEnabled(False)
 
 
     def opening_file_dialog(self):
-
+        """
+        Open a file dialog to select the destination directory for received files.
+        """
         file_dialog = QFileDialog(self)
         self.selected_dir = file_dialog.getExistingDirectory()
         self.dir_label.setText(self.selected_dir)
     
 
     def getting_public_ip_addr(self):
+        """
+        Get the public IP address from a remote server (https://httpbin.org/ip).
 
+        Returns:
+        - public_ip (str): The public IP address.
+        """
         try:
             response = requests.get("https://httpbin.org/ip")
 
@@ -109,7 +138,12 @@ class RecieveFile(QMainWindow):
 
 
     def getting_cipher(self):
+        """
+        Get an AES encryption object based on the user-entered key.
 
+        Returns:
+        - bool: True if encryption is successful, False if key is invalid.
+        """
         key = self.aes_text_edit.toPlainText()
 
         if len(key) > 16:
@@ -129,7 +163,11 @@ class RecieveFile(QMainWindow):
 
 
     def setting_up_server(self):
+        """
+        Set up the server with the user-defined parameters (IP, PORT, AES encryption).
 
+        Updates the 'validity' attribute and handles error cases.
+        """
         self.PORT = self.port_text_edit.toPlainText()
 
         self. validity = self.getting_cipher()
@@ -148,7 +186,9 @@ class RecieveFile(QMainWindow):
 
 
     def saving_file(self):
-
+        """
+        Start the file saving process by checking validity and starting the reception process in a new thread.
+        """
         try:
             if self.validity is True and os.path.isdir(self.selected_dir):
 
@@ -187,7 +227,12 @@ class FileAcceptance(QDialog):
 
 
     def __init__(self, parent = RecieveFile):
+        """
+        Initialize the FileAcceptance dialog and set up the GUI components.
 
+        Parameters:
+        - parent (RecieveFile): The parent window for this dialog.
+        """
         super(FileAcceptance, self).__init__(parent)
         uic.loadUi(creating_path_to_ui_file("file_acceptance.ui"), self)
         
@@ -200,8 +245,17 @@ class FileAcceptance(QDialog):
         self.dialog_options.rejected.connect(self.reject) 
 
 
-    def getting_acceptance_satus(self, file_label, file_size):
-        
+    def getting_acceptance_satus(self, file_label: str, file_size):
+        """
+        Display the received file name and size in the dialog and wait for the user's acceptance or rejection.
+
+        Parameters:
+        - file_label (str): The name of the received file.
+        - file_size: The size of the received file in bytes.
+
+        Returns:
+        - bool: True if the user accepts the file, False if rejected.
+        """
         self.file_name_label.setText(file_label)
         self.file_size_label.setText(str(f'{round(float(file_size / 1000000), 2)} MB'))
         result = self.exec()
